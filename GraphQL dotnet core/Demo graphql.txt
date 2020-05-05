@@ -1,0 +1,149 @@
+Demo graphlq-dotnet
+
+query getStudentsAndEnrollementDate{
+students{
+  enrollmentDate
+...studentProperties
+}
+}
+
+query getStudentsAndLastName{
+students{
+  lastName
+...studentProperties
+}
+}
+
+
+query GetCoursesInclude($withDepartament:Boolean!){
+  courses{
+    courseID
+    credits
+    title
+    department @include (if:$withDepartament){
+      name
+      departmentID
+    }
+  }
+}
+query GetCoursesSkip($withoutDepartament:Boolean!){
+  courses{
+    courseID
+    credits
+    title
+    department @skip (if:$withoutDepartament){
+      name
+      departmentID
+    }
+  }
+}
+
+query GetCourseById{
+  courses(id:2){
+    courseID
+    title
+  }
+}
+
+mutation AddSome($course:CourseInputType!){
+  createCourse(course:$course){
+    courseID
+    credits
+    departmentID
+    title
+  }
+}
+
+subscription NotifyForCourses{
+  courseAdded{
+    courseID
+    credits
+  }
+}
+
+fragment studentProperties on StudentType{
+  id :iD
+  fullName
+}
+
+
+
+
+
+{
+  "course": {"title": "titlu2",
+    "credits": 6,
+    "departmentID": 1
+  }
+}
+
+
+
+
+
+
+
+
+
+query { 
+  viewer { 
+    login
+    bio
+    avatarUrl
+    name
+  }
+}
+
+
+
+
+query GetInfo($number:Int) { 
+  viewer { 
+    login
+    bio
+    avatarUrl
+    name
+    followers(last:$number){
+      nodes{
+        id
+        name
+        bio
+      }
+    }
+  }
+}
+
+{"number": 0}
+
+
+
+query GetInfo {
+  viewer{
+    id
+    login
+    name
+    status {
+      id
+      message
+    }
+  }
+}
+
+mutation NewStatus($input:ChangeUserStatusInput!){
+  changeUserStatus(input:$input){
+    status{
+      message
+    }
+    
+  }
+}
+
+{
+  "input": 
+  {"clientMutationId": "MDQ6VXNlcjEwMjExNDk5",
+    "message": null}
+
+}
+
+
+

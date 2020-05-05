@@ -1,0 +1,81 @@
+schema {
+  query: UniversityQuery
+  mutation: Mutation
+  subscription: Subscription
+}
+
+input CourseInputType {
+  courseID: Int!
+  title: String!
+  credits: Int!
+  departmentID: Int!
+}
+
+type CourseType {
+  courseID: Int!
+  credits: Int!
+  department: DepartmentType
+  departmentID: Int!
+  title: String!
+}
+
+"""
+The `Date` scalar type represents a year, month and day in accordance with the
+[ISO-8601](https://en.wikipedia.org/wiki/ISO_8601) standard.
+"""
+scalar Date
+
+"""
+The `DateTime` scalar type represents a date and time. `DateTime` expects
+timestamps to be formatted in accordance with the
+[ISO-8601](https://en.wikipedia.org/wiki/ISO_8601) standard.
+"""
+scalar DateTime
+
+"""
+The `DateTimeOffset` scalar type represents a date, time and offset from UTC.
+`DateTimeOffset` expects timestamps to be formatted in accordance with the
+[ISO-8601](https://en.wikipedia.org/wiki/ISO_8601) standard.
+"""
+scalar DateTimeOffset
+
+scalar Decimal
+
+type DepartmentType {
+  budget: Decimal!
+  departmentID: Int!
+  name: String!
+  startDate: Date!
+}
+
+"""
+The `Milliseconds` scalar type represents a period of time represented as the total number of milliseconds.
+"""
+scalar Milliseconds
+
+type Mutation {
+  createCourse(course: CourseInputType!): CourseType
+}
+
+"""
+The `Seconds` scalar type represents a period of time represented as the total number of seconds.
+"""
+scalar Seconds
+
+type StudentType {
+  enrollmentDate: Date!
+  fullName: String!
+  iD: Int!
+  lastName: String!
+}
+
+type Subscription {
+  courseAdded: CourseType
+}
+
+type UniversityQuery {
+  ab: String!
+  courses(id: Int = null): [CourseType]
+  students: [StudentType]
+}
+
